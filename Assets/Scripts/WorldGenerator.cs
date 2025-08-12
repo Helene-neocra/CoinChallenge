@@ -7,12 +7,16 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] floorPrefabs; // Prefabs de sol
     public GameObject[] envPrefabs;   // Prefabs d'environnement (arbre, rocher, etc.)
     public GameObject[] smallEnvPrefabs; // Petits éléments (fleurs, champignons, etc.)
+    public GameObject[] platformPrefabs; // Prefabs de plateformes
     public int width = 200;
     public int length = 100;
     public float spacing = 2f;
     [Range(0f, 1f)] public float envDensity = 0.5f; // % de cases avec un élément d'environnement
     [Range(0f, 1f)] public float smallEnvDensity = 0.2f; // Densité des petits éléments
+    [Range(0f, 1f)] public float platformDensity = 0.05f; // Densité des plateformes
     public Transform worldRoot; // Parent pour tous les objets générés
+
+    private List<Transform> generatedPlatforms = new List<Transform>();
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +30,14 @@ public class WorldGenerator : MonoBehaviour
 
     }
 
+    public List<Transform> GetGeneratedPlatforms()
+    {
+        return generatedPlatforms;
+    }
+
     public void GenerateWorld()
     {
+        generatedPlatforms.Clear();
         // Supprime les anciens objets générés
         if (worldRoot != null)
         {
@@ -46,6 +56,15 @@ public class WorldGenerator : MonoBehaviour
                 Vector3 pos = new Vector3(x * spacing, 0, z * spacing);
                 var floorObj = Instantiate(floor, pos, Quaternion.identity, worldRoot);
 
+                // Place une plateforme aléatoirement
+                if (platformPrefabs.Length > 0 && Random.value < platformDensity)
+                {
+                    GameObject platform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+                    Vector3 platformPos = pos + new Vector3(Random.Range(-0.2f, 0.2f), 1.5f, Random.Range(-0.2f, 0.2f));
+                    GameObject platformObj = Instantiate(platform, platformPos, Quaternion.identity, worldRoot);
+                    generatedPlatforms.Add(platformObj.transform);
+                }
+
                 // Place un élément d'environnement aléatoirement
                 if (envPrefabs.Length > 0 && Random.value < envDensity)
                 {
@@ -60,7 +79,7 @@ public class WorldGenerator : MonoBehaviour
                 {
                     GameObject small = smallEnvPrefabs[Random.Range(0, smallEnvPrefabs.Length)];
                     // Ajout d'un offset Y pour les petits éléments
-                    Vector3 smallPos = pos + new Vector3(Random.Range(-0.4f, 0.4f), 0.5f, Random.Range(-0.4f, 0.4f));
+                    Vector3 smallPos = pos + new Vector3(Random.Range(-0.4f, 0.4f), 0.1f, Random.Range(-0.4f, 0.4f));
                     Instantiate(small, smallPos, Quaternion.identity, worldRoot);
                 }
             }
