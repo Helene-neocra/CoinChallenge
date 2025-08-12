@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorldGenerator : MonoBehaviour
 {
@@ -84,5 +85,16 @@ public class WorldGenerator : MonoBehaviour
                 }
             }
         }
+
+        // Note: NavMesh baking pour génération procédurale nécessite une configuration manuelle
+        // Pour l'instant, on laisse le NavMesh se gérer manuellement dans Unity
+        Debug.Log("World generation completed!");
+    }
+    
+    // Méthode pour baker manuellement le NavMesh si besoin
+    public void BakeNavMeshManually()
+    {
+        // Cette méthode peut être appelée manuellement depuis un autre script
+        Debug.Log("Use Window > AI > Navigation to bake NavMesh manually");
     }
 }
