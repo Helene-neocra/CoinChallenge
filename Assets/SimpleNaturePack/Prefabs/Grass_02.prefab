@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3356751432537613521}
   - component: {fileID: 43327879499130323}
   - component: {fileID: 901834077339367398}
+  - component: {fileID: 4465782258498831664}
   m_Layer: 0
   m_Name: Grass_02
   m_TagString: Untagged
@@ -81,10 +82,33 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &4465782258498831664
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356751432538110193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08733958
+  m_Height: 0.20805858
+  m_Direction: 1
+  m_Center: {x: 0.0009070039, y: 0.10084654, z: 0}
 --- !u!1 &4236091592663432304
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +208,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

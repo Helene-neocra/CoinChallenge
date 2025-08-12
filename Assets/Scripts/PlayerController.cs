@@ -90,12 +90,15 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 direction = new Vector3(moveInput.x, 0, moveInput.y);
+        // Déplacement relatif à l'orientation du personnage
+        Vector3 direction = (transform.right * moveInput.x + transform.forward * moveInput.y).normalized;
         if (direction.sqrMagnitude > 0.01f)
         {
             rb.velocity = new Vector3(direction.x * moveSpeed, rb.velocity.y, direction.z * moveSpeed);
+            // Ralentit la rotation du personnage (valeur plus faible)
+            float rotationSpeed = 0.06f; // Valeur plus faible pour une rotation plus douce
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 0.25f);
+            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed);
         }
         else
         {
