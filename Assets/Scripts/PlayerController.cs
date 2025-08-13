@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector3(direction.x * moveSpeed, rb.velocity.y, direction.z * moveSpeed);
             // Ralentit la rotation du personnage (valeur plus faible)
-            float rotationSpeed = 0.06f; // Valeur plus faible pour une rotation plus douce
+            float rotationSpeed = 0.04f; // Valeur plus faible pour une rotation plus douce
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
             rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed);
         }
