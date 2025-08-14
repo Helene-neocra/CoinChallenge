@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class GameManager : MonoBehaviour
     public float minZ = 0f;
     public float maxZ = 100f;
     public Transform coinParent;
-
+    [Header("Game Over UI")]
+    public Button restartButton; // Référence au bouton Rejouer
+    public GameObject gameOverPanel; // Panel contenant l'UI de fin de partie (optionnel)
+    
     private bool gameEnded = false;
 
     void OnEnable()
@@ -89,8 +93,45 @@ public class GameManager : MonoBehaviour
 
     void ShowGameOverUI()
     {
-        // Pour l'instant, juste un message dans la console
-        Debug.Log("Game Over! Press R to restart (not implemented yet)");
-        // Plus tard : afficher UI de fin de partie, bouton restart, etc.
+        Debug.Log("ShowGameOverUI called!");
+        
+        // Affiche le bouton Rejouer
+        if (restartButton != null)
+        {
+            Debug.Log("Activating restart button");
+            restartButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Restart button is null! Check GameManager inspector.");
+        }
+        
+        // Panel optionnel (seulement si assigné)
+        if (gameOverPanel != null)
+        {
+            Debug.Log("Activating game over panel");
+            gameOverPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("No game over panel assigned - using button only");
+        }
+        
+        Debug.Log($"Game Over! Score final : {CoinController.score}");
+    }
+    
+    // Méthode appelée par le bouton Rejouer
+    public void RestartGame()
+    {
+        GameSceneManager sceneManager = FindObjectOfType<GameSceneManager>();
+        if (sceneManager != null)
+        {
+            sceneManager.RestartGame();
+        }
+        else
+        {
+            // Fallback si pas de GameSceneManager
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
     }
 }

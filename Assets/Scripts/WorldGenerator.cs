@@ -61,27 +61,77 @@ public class WorldGenerator : MonoBehaviour
                 if (platformPrefabs.Length > 0 && Random.value < platformDensity)
                 {
                     GameObject platform = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
-                    Vector3 platformPos = pos + new Vector3(Random.Range(-0.2f, 0.2f), 1.5f, Random.Range(-0.2f, 0.2f));
-                    GameObject platformObj = Instantiate(platform, platformPos, Quaternion.identity, worldRoot);
-                    generatedPlatforms.Add(platformObj.transform);
+                    // Position de base avec décalage aléatoire
+                    Vector3 basePos = pos + new Vector3(Random.Range(-0.2f, 0.2f), 0, Random.Range(-0.2f, 0.2f));
+                    
+                    // Raycast vers le bas pour trouver la surface exacte du sol
+                    Vector3 rayStart = basePos + Vector3.up * 5f;
+                    RaycastHit hit;
+                    
+                    if (Physics.Raycast(rayStart, Vector3.down, out hit, 10f))
+                    {
+                        // Place la plateforme à 0.8f au-dessus de la surface détectée (plus accessible)
+                        Vector3 platformPos = hit.point + Vector3.up * 0.8f;
+                        GameObject platformObj = Instantiate(platform, platformPos, Quaternion.identity, worldRoot);
+                        generatedPlatforms.Add(platformObj.transform);
+                    }
+                    else
+                    {
+                        // Fallback si le raycast échoue
+                        Vector3 platformPos = basePos + Vector3.up * 0.8f;
+                        GameObject platformObj = Instantiate(platform, platformPos, Quaternion.identity, worldRoot);
+                        generatedPlatforms.Add(platformObj.transform);
+                    }
                 }
 
                 // Place un élément d'environnement aléatoirement
                 if (envPrefabs.Length > 0 && Random.value < envDensity)
                 {
                     GameObject env = envPrefabs[Random.Range(0, envPrefabs.Length)];
-                    // Décale légèrement l'élément pour éviter qu'il soit exactement au centre
-                    Vector3 envPos = pos + new Vector3(Random.Range(-0.3f, 0.3f), 0, Random.Range(-0.3f, 0.3f));
-                    Instantiate(env, envPos, Quaternion.identity, worldRoot);
+                    // Position de base avec décalage aléatoire
+                    Vector3 basePos = pos + new Vector3(Random.Range(-0.3f, 0.3f), 0, Random.Range(-0.3f, 0.3f));
+                    
+                    // Raycast vers le bas pour trouver la surface exacte du sol
+                    Vector3 rayStart = basePos + Vector3.up * 5f;
+                    RaycastHit hit;
+                    
+                    if (Physics.Raycast(rayStart, Vector3.down, out hit, 10f))
+                    {
+                        // Place l'élément d'environnement sur la surface détectée
+                        Vector3 envPos = hit.point + Vector3.up * 0.05f; // Petit offset pour éviter les conflits
+                        GameObject envObj = Instantiate(env, envPos, Quaternion.identity, worldRoot);
+                    }
+                    else
+                    {
+                        // Fallback si le raycast échoue
+                        Vector3 envPos = basePos + Vector3.up * 0.1f;
+                        Instantiate(env, envPos, Quaternion.identity, worldRoot);
+                    }
                 }
 
                 // Place un petit élément (fleur, champignon, etc.) aléatoirement
                 if (smallEnvPrefabs.Length > 0 && Random.value < smallEnvDensity)
                 {
                     GameObject small = smallEnvPrefabs[Random.Range(0, smallEnvPrefabs.Length)];
-                    // Ajout d'un offset Y pour les petits éléments
-                    Vector3 smallPos = pos + new Vector3(Random.Range(-0.4f, 0.4f), 0.1f, Random.Range(-0.4f, 0.4f));
-                    Instantiate(small, smallPos, Quaternion.identity, worldRoot);
+                    // Position de base avec décalage aléatoire
+                    Vector3 basePos = pos + new Vector3(Random.Range(-0.4f, 0.4f), 0, Random.Range(-0.4f, 0.4f));
+                    
+                    // Raycast vers le bas pour trouver la surface exacte du sol
+                    Vector3 rayStart = basePos + Vector3.up * 5f; // Commence 5 unités au-dessus
+                    RaycastHit hit;
+                    
+                    if (Physics.Raycast(rayStart, Vector3.down, out hit, 10f))
+                    {
+                        // Place l'objet sur la surface détectée + un petit offset
+                        Vector3 smallPos = hit.point + Vector3.up * 0.1f;
+                        GameObject smallObj = Instantiate(small, smallPos, Quaternion.identity, worldRoot);
+                    }
+                    else
+                    {
+                        // Fallback si le raycast échoue
+                        Vector3 smallPos = basePos + Vector3.up * 0.5f;
+                        Instantiate(small, smallPos, Quaternion.identity, worldRoot);
+                    }
                 }
             }
         }
