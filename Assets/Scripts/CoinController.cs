@@ -1,89 +1,79 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    public float rotationSpeed = 90f; // degrés par seconde
+    [Header("Coin Settings")]
+    public GameObject coinPrefab;
+    public int coinCount = 50;
+    public float coinHeight = 1.5f;
+    
+    [Header("World Bounds")]
+    public float minX = 0f;
+    public float maxX = 80f;
+    public float minZ = 0f;
+    public float maxZ = 80f;
+    
     public static int score = 0;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        
+        SpawnCoins();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    void SpawnCoins()
     {
-        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
-    }
-
-    public static void SpawnRandomCoins(int count, GameObject coinPrefab, float minX, float maxX, float minZ, float maxZ, Transform parent = null, float offsetY = 1.84f, List<Transform> platformList = null)
-    {
-        int coinsOnPlatforms = 0;
-        int coinsOnGround = count;
-        if (platformList != null && platformList.Count > 0)
+        for (int i = 0; i < coinCount; i++)
         {
-            coinsOnPlatforms = Mathf.Min(count / 3, platformList.Count);
-            coinsOnGround = count - coinsOnPlatforms;
-            // Instancie un tiers des pièces sur les plateformes
-            var chosenPlatforms = new List<Transform>(platformList);
-            for (int i = 0; i < coinsOnPlatforms; i++)
-            {
-                if (chosenPlatforms.Count == 0) break;
-                int idx = Random.Range(0, chosenPlatforms.Count);
-                Transform plat = chosenPlatforms[idx];
-                chosenPlatforms.RemoveAt(idx);
-                // Place le coin exactement au centre de la plateforme, à la hauteur du dessus du collider
-                float y = plat.position.y;
-                Collider platCol = plat.GetComponentInChildren<Collider>(); // Prend aussi les colliders enfants
-                if (platCol != null)
-                {
-                    y = platCol.bounds.center.y + platCol.bounds.extents.y;
-                    // Ajoute la moitié de la hauteur du coin si besoin (ex: 0.5f)
-                    y += 0.5f;
-                }
-                else
-                {
-                    y += 1f; // fallback si pas de collider
-                }
-                Vector3 pos = new Vector3(platCol != null ? platCol.bounds.center.x : plat.position.x, y, platCol != null ? platCol.bounds.center.z : plat.position.z);
-                Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
-            }
-        }
-        // Instancie le reste des pièces au sol avec Raycast pour détecter la surface
-        for (int i = 0; i < coinsOnGround; i++)
-        {
+            // Position aléatoire
             float x = Random.Range(minX, maxX);
             float z = Random.Range(minZ, maxZ);
             
-            // Utilise un Raycast pour détecter la surface exacte du sol
-            Vector3 rayStart = new Vector3(x, offsetY + 10f, z); // Commence bien au-dessus
-            RaycastHit hit;
+            // Raycast pour trouver le sol
+            Vector3 rayStart = new Vector3(x, 50f, z);
             
-            if (Physics.Raycast(rayStart, Vector3.down, out hit, 20f))
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 100f))
             {
-                // Place le coin sur la surface détectée + offset plus élevé
-                Vector3 pos = hit.point + Vector3.up * 0.8f; // Augmenté de 0.3f à 0.8f
-                Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
-            }
-            else
-            {
-                // Fallback si le raycast échoue - hauteur plus élevée
-                Vector3 pos = new Vector3(x, offsetY + 0.5f, z); // Ajout de 0.5f
-                Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
+                // Placer le coin au-dessus du sol
+                Vector3 coinPosition = hit.point + Vector3.up * coinHeight;
+                GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+                
+                // Ajouter le script de collision directement sur chaque coin
+                coin.AddComponent<CoinTrigger>();
             }
         }
+        
+        Debug.Log($"{coinCount} coins générés");
     }
-
-    void OnTriggerEnter(Collider other)
+    
+    // Méthode statique pour ramasser une coin
+    public static void CollectCoin()
     {
-        if (other.CompareTag("Player"))
+        score++;
+        Debug.Log($"Coin collectée ! Score: {score}");
+    }
+    
+    // Méthode statique pour obtenir le score
+    public static int GetScore()
+    {
+        return score;
+    }
+    
+    // Réinitialiser le score
+    public static void ResetScore()
+    {
+        score = 0;
+    }
+    
+    // Classe interne pour gérer les collisions
+    public class CoinTrigger : MonoBehaviour
+    {
+        void OnTriggerEnter(Collider other)
         {
-            score++;
-            // Ici tu peux ajouter un effet, un son, etc.
-            gameObject.SetActive(false); // Désactive le coin
+            if (other.CompareTag("Player"))
+            {
+                CoinController.CollectCoin();
+                Destroy(gameObject);
+            }
         }
     }
 }
