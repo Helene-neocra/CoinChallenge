@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public float maxX = 100f;
     public float minZ = 0f;
     public float maxZ = 100f;
-    public Transform coinParent;
     [Header("Game Over UI")]
     public Button restartButton; // Référence au bouton Rejouer
     public GameObject gameOverPanel; // Panel contenant l'UI de fin de partie (optionnel)
@@ -31,30 +30,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Récupère les bornes du monde depuis WorldGenerator si possible
-        WorldGenerator wg = FindObjectOfType<WorldGenerator>();
-        if (wg != null)
-        {
-            minX = 0f;
-            maxX = (wg.width - 1) * wg.spacing;
-            minZ = 0f;
-            maxZ = (wg.length - 1) * wg.spacing;
-
-            // Attendre que la génération soit terminée puis générer les coins
-            StartCoroutine(GenerateCoinsAfterWorld(wg));
-        }
-        else
-        {
-            // Génère les coins aléatoirement dans le monde à la hauteur 1.84
-            CoinController.SpawnRandomCoins(coinCount, coinPrefab, minX, maxX, minZ, maxZ, coinParent);
-        }
-    }
-
-    IEnumerator GenerateCoinsAfterWorld(WorldGenerator wg)
-    {
-        yield return new WaitForEndOfFrame(); // Attendre que la génération soit finie
-        var platforms = wg.GetGeneratedPlatforms();
-        CoinController.SpawnRandomCoins(coinCount, coinPrefab, minX, maxX, minZ, maxZ, coinParent, 1.84f, platforms);
+        // Génère simplement les coins dans une zone fixe
+        CoinController.SpawnRandomCoins(coinCount, coinPrefab, minX, maxX, minZ, maxZ);
     }
 
     // Update is called once per frame
@@ -63,10 +40,13 @@ public class GameManager : MonoBehaviour
         // Vérification si le jeu est terminé
         if (gameEnded)
         {
-            // Désactive les contrôles du joueur
+            // Désactive les contrôles du joueur et force l'arrêt
             PlayerController player = FindObjectOfType<PlayerController>();
             if (player != null)
             {
+                // Force l'arrêt du mouvement
+                player.ForceStop();
+                // Désactive le script après avoir forcé l'arrêt
                 player.enabled = false;
             }
         }

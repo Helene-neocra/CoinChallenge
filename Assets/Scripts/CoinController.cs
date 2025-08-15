@@ -52,13 +52,28 @@ public class CoinController : MonoBehaviour
                 Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
             }
         }
-        // Instancie le reste des pièces au sol
+        // Instancie le reste des pièces au sol avec Raycast pour détecter la surface
         for (int i = 0; i < coinsOnGround; i++)
         {
             float x = Random.Range(minX, maxX);
             float z = Random.Range(minZ, maxZ);
-            Vector3 pos = new Vector3(x, offsetY, z);
-            Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
+            
+            // Utilise un Raycast pour détecter la surface exacte du sol
+            Vector3 rayStart = new Vector3(x, offsetY + 10f, z); // Commence bien au-dessus
+            RaycastHit hit;
+            
+            if (Physics.Raycast(rayStart, Vector3.down, out hit, 20f))
+            {
+                // Place le coin sur la surface détectée + offset plus élevé
+                Vector3 pos = hit.point + Vector3.up * 0.8f; // Augmenté de 0.3f à 0.8f
+                Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
+            }
+            else
+            {
+                // Fallback si le raycast échoue - hauteur plus élevée
+                Vector3 pos = new Vector3(x, offsetY + 0.5f, z); // Ajout de 0.5f
+                Object.Instantiate(coinPrefab, pos, Quaternion.identity, parent);
+            }
         }
     }
 

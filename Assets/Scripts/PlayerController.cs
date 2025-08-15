@@ -58,6 +58,45 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        
+        // Place le joueur sur la surface du sol au démarrage
+        PositionPlayerOnGround();
+    }
+    
+    void PositionPlayerOnGround()
+    {
+        // Position par défaut plus sûre au centre du monde
+        Vector3 defaultPosition = new Vector3(30f, 2f, 30f); // Centre du monde 30x30
+        
+        // Raycast depuis au-dessus pour trouver la surface du sol
+        Vector3 rayStart = defaultPosition + Vector3.up * 10f;
+        RaycastHit hit;
+        
+        // Raycast pour détecter tous les colliders
+        if (Physics.Raycast(rayStart, Vector3.down, out hit, 20f))
+        {
+            // Vérifier si c'est bien un objet au sol
+            if (hit.collider.gameObject.name.Contains("Ground") || 
+                hit.collider.gameObject.name.Contains("Floor"))
+            {
+                // Place le joueur sur la surface du sol détectée avec un offset adapté au nouveau système
+                Vector3 newPos = hit.point + Vector3.up * 0.0f; // Pas d'offset, directement sur le NavMesh
+                transform.position = newPos;
+                Debug.Log($"Player positioned on ground surface at: {newPos}");
+            }
+            else
+            {
+                // Position par défaut
+                transform.position = defaultPosition;
+                Debug.Log("Player positioned at default location");
+            }
+        }
+        else
+        {
+            // Position de secours
+            transform.position = defaultPosition;
+            Debug.Log("Could not find ground surface, using default position");
+        }
     }
 
     // Update is called once per frame
@@ -122,5 +161,29 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+    
+    // Méthode pour forcer l'arrêt du joueur à la fin du jeu
+    public void ForceStop()
+    {
+        // Arrête tous les inputs
+        moveInput = Vector2.zero;
+        
+        // Arrête le mouvement du Rigidbody
+        if (rb != null)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0); // Garde seulement la gravité
+        }
+        
+        // Force l'animation idle
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isJumpMiddle", false);
+            animator.SetBool("isFalling", false);
+        }
+        
+        Debug.Log("Player movement stopped - Game Over");
     }
 }
