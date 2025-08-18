@@ -20,30 +20,25 @@ public class WorldGenerator : MonoBehaviour
     public float smallEnvironmentHeightOffset;
     public float upEnvironmentHeightOffset;
 
-    [Header("World Bounds")]
-    public float minX = 0f;
-    public float maxX = 80f;
-    public float minZ = 0f;
-    public float maxZ = 80f;
-
-    void Start()
+    void Awake()
     {
-        if (!worldRoot)
-        {
-            GameObject rootObj = GameObject.Find("WorldRoot") ?? new GameObject("WorldRoot");
-            worldRoot = rootObj.transform;
-        }
-
-        GenerateWorld();
+       var myFloorGenerator = FindObjectOfType<FloorGenerator>();
+       myFloorGenerator.OnFloorGenerated += GenerateWorld;
+       
+       if (!worldRoot)
+       {
+           GameObject rootObj = GameObject.Find("WorldRoot") ?? new GameObject("WorldRoot");
+           worldRoot = rootObj.transform;
+       }
     }
 
-    public void GenerateWorld()
+    public void GenerateWorld(float minX, float minZ, float maxX, float maxZ)
     {
         ClearWorld();
 
-        PlaceObjects(environmentPrefabs, environmentCount, "Environment", environmentHeightOffset);
-        PlaceObjects(smallEnvironmentPrefabs, smallEnvironmentCount, "SmallEnvironment", smallEnvironmentHeightOffset);
-        PlaceObjects(upEnvironmentPrefabs, upEnvironmentCount, "UpEnvironment", upEnvironmentHeightOffset);
+        PlaceObjects(environmentPrefabs, environmentCount, "Environment", environmentHeightOffset, minX, maxX, minZ, maxZ);
+        PlaceObjects(smallEnvironmentPrefabs, smallEnvironmentCount, "SmallEnvironment", smallEnvironmentHeightOffset,  minX, maxX, minZ, maxZ);
+        PlaceObjects(upEnvironmentPrefabs, upEnvironmentCount, "UpEnvironment", upEnvironmentHeightOffset,  minX, maxX, minZ, maxZ);
     }
 
     void ClearWorld()
@@ -55,7 +50,8 @@ public class WorldGenerator : MonoBehaviour
         if (smallEnvParent) DestroyImmediate(smallEnvParent.gameObject);
     }
 
-    void PlaceObjects(GameObject[] prefabs, int count, string parentName, float heightOffset)
+    void PlaceObjects(GameObject[] prefabs, int count, string parentName, float heightOffset, float minX, float maxX,
+        float minZ, float maxZ)
     {
         if (prefabs.Length == 0) return;
 
@@ -77,11 +73,5 @@ public class WorldGenerator : MonoBehaviour
             }
         }
         Debug.Log($"{parentName}: {count} objets générés");
-    }
-
-    [ContextMenu("Regenerate World")]
-    public void RegenerateWorld()
-    {
-        GenerateWorld();
     }
 } 

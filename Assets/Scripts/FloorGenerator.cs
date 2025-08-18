@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
 {
+    public event System.Action<float, float, float, float> OnFloorGenerated;
     public GameObject[] floorPrefabs;
-    public int worldSize = 1;
+    public int worldSize = 2;
     private float spacing = 4f;
 
     void Start()
@@ -16,9 +17,9 @@ public class FloorGenerator : MonoBehaviour
 
     void GenerateFloor()
     {
-        for (int x = 0; x <= worldSize; x++)
+        for (int x = 0; x < worldSize; x++)
         {
-            for (int z = 0; z <= worldSize; z++)
+            for (int z = 0; z < worldSize; z++)
             {
 
                 Vector3 position = new Vector3(x * spacing, 0, z * spacing);
@@ -27,5 +28,11 @@ public class FloorGenerator : MonoBehaviour
                 Instantiate(prefab, position, Quaternion.identity);
             }
         }
+
+        var minX = -spacing / 2;
+        var minZ = -spacing / 2;
+        var maxX = worldSize * spacing - spacing / 2;
+        var maxZ = worldSize * spacing - spacing / 2;
+        OnFloorGenerated?.Invoke(minX, minZ, maxX, maxZ);
     }
 }

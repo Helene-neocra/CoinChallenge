@@ -273,8 +273,7 @@ MonoBehaviour:
   floorPrefabs:
   - {fileID: 8783942742790337804, guid: 6ff40d6ed0c774580a800d65d7229b20, type: 3}
   - {fileID: 2567249757650446784, guid: 4bb804980e9ce4acfa688c02b53781f2, type: 3}
-  worldSize: 40
-  spacing: 2
+  worldSize: 2
 --- !u!4 &279090514
 Transform:
   m_ObjectHideFlags: 0
@@ -888,15 +887,14 @@ MonoBehaviour:
   - {fileID: 4647272448800025645, guid: 212eff3538e7c41b9b033af907aaff43, type: 3}
   - {fileID: 3867576660241278233, guid: 4a99d524952ff4f199944cf187a20048, type: 3}
   - {fileID: 8616800062803140682, guid: 6ea7251b76c754a468d13b1d8821a56b, type: 3}
-  platformPrefabs:
-  - {fileID: 8070486724569607167, guid: c90805caa014d423682846b6479c8253, type: 3}
+  upEnvironmentPrefabs: []
   worldRoot: {fileID: 624973308}
   environmentCount: 50
   smallEnvironmentCount: 200
-  platformCount: 25
+  upEnvironmentCount: 50
   environmentHeightOffset: 0
   smallEnvironmentHeightOffset: 0
-  platformHeightOffset: 0.1
+  upEnvironmentHeightOffset: 0
   minX: 0
   maxX: 80
   minZ: 0
@@ -1190,7 +1188,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1216,8 +1214,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12911509, y: 0.00000017338209, z: -0.000000022575202, w: 0.99162966}
-  m_LocalPosition: {x: 0.69043577, y: 1.990397, z: -2.2827911}
+  m_LocalRotation: {x: 0.11757736, y: 0, z: 0, w: 0.99306375}
+  m_LocalPosition: {x: 0.69043577, y: 4.68, z: -10.282791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
