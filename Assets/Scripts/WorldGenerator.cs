@@ -5,7 +5,7 @@ public class WorldGenerator : MonoBehaviour
     [Header("Prefabs")]
     public GameObject[] environmentPrefabs;
     public GameObject[] smallEnvironmentPrefabs;
-    public GameObject[] platformPrefabs;
+    public GameObject[] upEnvironmentPrefabs;
 
     [Header("World Settings")]
     public Transform worldRoot;
@@ -13,12 +13,12 @@ public class WorldGenerator : MonoBehaviour
     [Header("Object Counts")]
     public int environmentCount = 50;
     public int smallEnvironmentCount = 100;
-    public int platformCount = 15;
+    public int upEnvironmentCount = 50;
 
     [Header("Height Offsets")]
     public float environmentHeightOffset;
     public float smallEnvironmentHeightOffset;
-    public float platformHeightOffset = 0.1f;
+    public float upEnvironmentHeightOffset;
 
     [Header("World Bounds")]
     public float minX = 0f;
@@ -43,21 +43,16 @@ public class WorldGenerator : MonoBehaviour
 
         PlaceObjects(environmentPrefabs, environmentCount, "Environment", environmentHeightOffset);
         PlaceObjects(smallEnvironmentPrefabs, smallEnvironmentCount, "SmallEnvironment", smallEnvironmentHeightOffset);
-        PlaceObjects(platformPrefabs, platformCount, "Platforms", platformHeightOffset);
-
-        Debug.Log("Génération du monde terminée");
+        PlaceObjects(upEnvironmentPrefabs, upEnvironmentCount, "UpEnvironment", upEnvironmentHeightOffset);
     }
 
     void ClearWorld()
     {
-        // Ne supprimer que les objets d'environnement, pas le sol
         Transform envParent = worldRoot.Find("Environment");
         Transform smallEnvParent = worldRoot.Find("SmallEnvironment");
-        Transform platformParent = worldRoot.Find("Platforms");
 
         if (envParent) DestroyImmediate(envParent.gameObject);
         if (smallEnvParent) DestroyImmediate(smallEnvParent.gameObject);
-        if (platformParent) DestroyImmediate(platformParent.gameObject);
     }
 
     void PlaceObjects(GameObject[] prefabs, int count, string parentName, float heightOffset)
@@ -89,4 +84,4 @@ public class WorldGenerator : MonoBehaviour
     {
         GenerateWorld();
     }
-}
+} 
