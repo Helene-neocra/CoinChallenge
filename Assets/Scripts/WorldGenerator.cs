@@ -45,10 +45,13 @@ public class WorldGenerator : MonoBehaviour
     {
         Transform envParent = worldRoot.Find("Environment");
         Transform smallEnvParent = worldRoot.Find("SmallEnvironment");
+        Transform upEnvParent = worldRoot.Find("UpEnvironment");
 
         if (envParent) DestroyImmediate(envParent.gameObject);
         if (smallEnvParent) DestroyImmediate(smallEnvParent.gameObject);
-    }
+        if (upEnvParent) DestroyImmediate(upEnvParent.gameObject);
+       
+    } 
 
     void PlaceObjects(GameObject[] prefabs, int count, string parentName, float heightOffset, float minX, float maxX,
         float minZ, float maxZ)

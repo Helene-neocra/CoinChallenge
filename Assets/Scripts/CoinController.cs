@@ -7,21 +7,21 @@ public class CoinController : MonoBehaviour
     public int coinCount = 50;
     public float coinHeight = 1.5f;
     
-    [Header("World Bounds")]
-    public float minX = 0f;
-    public float maxX = 80f;
-    public float minZ = 0f;
-    public float maxZ = 80f;
+    
     
     public static int score = 0;
     
-    void Start()
+    void Awake()
     {
-        SpawnCoins();
+        var myFloorGenerator = FindObjectOfType<FloorGenerator>();
+        myFloorGenerator.OnFloorGenerated += SpawnCoins;
+        
     }
     
-    void SpawnCoins()
+    void SpawnCoins(float minX, float minZ, float maxX, float maxZ)
     {
+        ClearCoins(); 
+        
         for (int i = 0; i < coinCount; i++)
         {
             // Position aléatoire
@@ -41,8 +41,17 @@ public class CoinController : MonoBehaviour
                 coin.AddComponent<CoinTrigger>();
             }
         }
+       
         
         Debug.Log($"{coinCount} coins générés");
+    }
+    
+    void ClearCoins()
+    {
+        foreach (Transform child in transform)
+        {
+            DestroyImmediate(child.gameObject);
+        }
     }
     
     // Méthode statique pour ramasser une coin

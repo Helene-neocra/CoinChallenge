@@ -273,7 +273,7 @@ MonoBehaviour:
   floorPrefabs:
   - {fileID: 8783942742790337804, guid: 6ff40d6ed0c774580a800d65d7229b20, type: 3}
   - {fileID: 2567249757650446784, guid: 4bb804980e9ce4acfa688c02b53781f2, type: 3}
-  worldSize: 2
+  worldSize: 4
 --- !u!4 &279090514
 Transform:
   m_ObjectHideFlags: 0
@@ -895,10 +895,6 @@ MonoBehaviour:
   environmentHeightOffset: 0
   smallEnvironmentHeightOffset: 0
   upEnvironmentHeightOffset: 0
-  minX: 0
-  maxX: 80
-  minZ: 0
-  maxZ: 80
 --- !u!1 &752961716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,10 +1105,6 @@ MonoBehaviour:
   coinPrefab: {fileID: 2602037431577248585, guid: 9fa33ac130b1447619d6a909b4f13288, type: 3}
   coinCount: 150
   coinHeight: 1.5
-  minX: 0
-  maxX: 80
-  minZ: 0
-  maxZ: 80
 --- !u!4 &840660586
 Transform:
   m_ObjectHideFlags: 0
@@ -1188,7 +1180,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1214,8 +1206,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11757736, y: 0, z: 0, w: 0.99306375}
-  m_LocalPosition: {x: 0.69043577, y: 4.68, z: -10.282791}
+  m_LocalRotation: {x: 0.12911509, y: 0.00000017338209, z: -0.000000022575202, w: 0.99162966}
+  m_LocalPosition: {x: 0.69043577, y: 1.990397, z: -2.2827911}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
