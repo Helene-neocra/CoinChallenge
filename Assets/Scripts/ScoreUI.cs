@@ -7,6 +7,7 @@ using TMPro;
 public class ScoreUI : MonoBehaviour
 {
     public TMP_Text scoreText;
+    public static int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,26 @@ public class ScoreUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score : " + CoinController.score;
+        scoreText.text = "Score : " + ScoreUI.score;
+    }
+    
+    // Méthode statique pour ramasser une coin
+    public static void IncrementScore(int amount)
+    {
+        score+= amount;
+        Debug.Log($"Coin collectée ! Score: {score}");
+    }
+    
+    // Méthode statique pour obtenir le score
+    public static int GetScore()
+    {
+        return score;
+    }
+    
+    
+    // Réinitialiser le score
+    public static void ResetScore()
+    {
+        score = 0;
     }
 }

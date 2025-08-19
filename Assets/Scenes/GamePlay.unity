@@ -495,6 +495,53 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1697865687}
+--- !u!1 &566663328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 566663330}
+  - component: {fileID: 566663329}
+  m_Layer: 0
+  m_Name: GoldGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &566663329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566663328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e89b055b2f48fcab53af4a7d02911d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 327547064007147992, guid: d5cd3b0e79f6149f8aa5950b8f11b2c9, type: 3}
+  coinCount: 20
+  coinHeight: 1
+--- !u!4 &566663330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566663328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 86144.57, y: 2.6400096, z: 722978.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &624973307
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,14 +934,15 @@ MonoBehaviour:
   - {fileID: 4647272448800025645, guid: 212eff3538e7c41b9b033af907aaff43, type: 3}
   - {fileID: 3867576660241278233, guid: 4a99d524952ff4f199944cf187a20048, type: 3}
   - {fileID: 8616800062803140682, guid: 6ea7251b76c754a468d13b1d8821a56b, type: 3}
-  upEnvironmentPrefabs: []
+  upEnvironmentPrefabs:
+  - {fileID: 8070486724569607167, guid: c90805caa014d423682846b6479c8253, type: 3}
   worldRoot: {fileID: 624973308}
-  environmentCount: 50
-  smallEnvironmentCount: 200
-  upEnvironmentCount: 50
+  environmentCount: 100
+  smallEnvironmentCount: 400
+  upEnvironmentCount: 100
   environmentHeightOffset: 0
   smallEnvironmentHeightOffset: 0
-  upEnvironmentHeightOffset: 0
+  upEnvironmentHeightOffset: 1
 --- !u!1 &752961716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,8 +1151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 2602037431577248585, guid: 9fa33ac130b1447619d6a909b4f13288, type: 3}
-  coinCount: 150
-  coinHeight: 1.5
+  coinCount: 200
+  coinHeight: 1
 --- !u!4 &840660586
 Transform:
   m_ObjectHideFlags: 0
@@ -1958,4 +2006,5 @@ SceneRoots:
   - {fileID: 2001105938}
   - {fileID: 1168812127}
   - {fileID: 840660586}
+  - {fileID: 566663330}
   - {fileID: 279090514}

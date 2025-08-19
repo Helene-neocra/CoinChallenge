@@ -6,6 +6,7 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] environmentPrefabs;
     public GameObject[] smallEnvironmentPrefabs;
     public GameObject[] upEnvironmentPrefabs;
+    
 
     [Header("World Settings")]
     public Transform worldRoot;

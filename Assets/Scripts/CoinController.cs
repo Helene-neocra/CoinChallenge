@@ -7,10 +7,6 @@ public class CoinController : MonoBehaviour
     public int coinCount = 50;
     public float coinHeight = 1.5f;
     
-    
-    
-    public static int score = 0;
-    
     void Awake()
     {
         var myFloorGenerator = FindObjectOfType<FloorGenerator>();
@@ -38,7 +34,7 @@ public class CoinController : MonoBehaviour
                 GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
                 
                 // Ajouter le script de collision directement sur chaque coin
-                coin.AddComponent<CoinTrigger>();
+                // coin.AddComponent<CoinTrigger>();
             }
         }
        
@@ -54,35 +50,9 @@ public class CoinController : MonoBehaviour
         }
     }
     
-    // Méthode statique pour ramasser une coin
-    public static void CollectCoin()
-    {
-        score++;
-        Debug.Log($"Coin collectée ! Score: {score}");
-    }
+  
     
-    // Méthode statique pour obtenir le score
-    public static int GetScore()
-    {
-        return score;
-    }
     
-    // Réinitialiser le score
-    public static void ResetScore()
-    {
-        score = 0;
-    }
-    
-    // Classe interne pour gérer les collisions
-    public class CoinTrigger : MonoBehaviour
-    {
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                CoinController.CollectCoin();
-                Destroy(gameObject);
-            }
-        }
-    }
-}
+}  
+
+// Classe interne pour gérer les collisions

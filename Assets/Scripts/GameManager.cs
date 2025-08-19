@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         if (gameEnded) return;
         gameEnded = true;
 
-        Debug.Log($"Temps écoulé ! Score final : {CoinController.score}");
+        Debug.Log($"Temps écoulé ! Score final : {ScoreUI.score}");
 
         player?.ForceStop();
         if (player != null)
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("No game over panel assigned - using button only");
         }
         
-        Debug.Log($"Game Over! Score final : {CoinController.score}");
+        Debug.Log($"Game Over! Score final : {ScoreUI.score}");
     }
     
     public void RestartGame()
