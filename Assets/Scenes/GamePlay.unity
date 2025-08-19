@@ -526,7 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 327547064007147992, guid: d5cd3b0e79f6149f8aa5950b8f11b2c9, type: 3}
   coinCount: 20
-  coinHeight: 1
+  coinHeight: 0
 --- !u!4 &566663330
 Transform:
   m_ObjectHideFlags: 0
@@ -936,6 +936,8 @@ MonoBehaviour:
   - {fileID: 8616800062803140682, guid: 6ea7251b76c754a468d13b1d8821a56b, type: 3}
   upEnvironmentPrefabs:
   - {fileID: 8070486724569607167, guid: c90805caa014d423682846b6479c8253, type: 3}
+  WinPrefabs:
+  - {fileID: 2900791935985619903, guid: d58993baeda254a22b45d1b46befb363, type: 3}
   worldRoot: {fileID: 624973308}
   environmentCount: 100
   smallEnvironmentCount: 400
@@ -943,6 +945,7 @@ MonoBehaviour:
   environmentHeightOffset: 0
   smallEnvironmentHeightOffset: 0
   upEnvironmentHeightOffset: 1
+  WinHeightOffset: 0
 --- !u!1 &752961716
 GameObject:
   m_ObjectHideFlags: 0

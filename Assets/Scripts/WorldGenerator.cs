@@ -6,7 +6,7 @@ public class WorldGenerator : MonoBehaviour
     public GameObject[] environmentPrefabs;
     public GameObject[] smallEnvironmentPrefabs;
     public GameObject[] upEnvironmentPrefabs;
-    
+    public GameObject[] WinPrefabs;
 
     [Header("World Settings")]
     public Transform worldRoot;
@@ -15,11 +15,13 @@ public class WorldGenerator : MonoBehaviour
     public int environmentCount = 50;
     public int smallEnvironmentCount = 100;
     public int upEnvironmentCount = 50;
+    private int WinCount = 1;
 
     [Header("Height Offsets")]
     public float environmentHeightOffset;
     public float smallEnvironmentHeightOffset;
     public float upEnvironmentHeightOffset;
+    public float WinHeightOffset;
 
     void Awake()
     {
@@ -40,6 +42,7 @@ public class WorldGenerator : MonoBehaviour
         PlaceObjects(environmentPrefabs, environmentCount, "Environment", environmentHeightOffset, minX, maxX, minZ, maxZ);
         PlaceObjects(smallEnvironmentPrefabs, smallEnvironmentCount, "SmallEnvironment", smallEnvironmentHeightOffset,  minX, maxX, minZ, maxZ);
         PlaceObjects(upEnvironmentPrefabs, upEnvironmentCount, "UpEnvironment", upEnvironmentHeightOffset,  minX, maxX, minZ, maxZ);
+        PlaceObjects(WinPrefabs, WinCount, "Win", WinHeightOffset, minX, maxX, minZ, maxZ);
     }
 
     void ClearWorld()
@@ -47,10 +50,12 @@ public class WorldGenerator : MonoBehaviour
         Transform envParent = worldRoot.Find("Environment");
         Transform smallEnvParent = worldRoot.Find("SmallEnvironment");
         Transform upEnvParent = worldRoot.Find("UpEnvironment");
+        Transform winParent = worldRoot.Find("Win");
 
         if (envParent) DestroyImmediate(envParent.gameObject);
         if (smallEnvParent) DestroyImmediate(smallEnvParent.gameObject);
         if (upEnvParent) DestroyImmediate(upEnvParent.gameObject);
+        if(winParent) DestroyImmediate(winParent.gameObject);
        
     } 
 
