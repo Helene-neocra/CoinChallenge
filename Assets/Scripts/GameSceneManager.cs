@@ -9,13 +9,19 @@ public class GameSceneManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
     }
     
-    // Méthode pour le bouton "Rejouer" sur la scène GamePlay
+    // Méthode pour aller à la scène Winner (appelée quand le joueur gagne)
+    public void GoToWinner()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Winner");
+    }
+    
+    // Méthode pour le bouton "Rejouer" sur la scène Winner
     public void RestartGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlay");
     }
     
-    // Méthode pour retourner au menu (optionnel)
+    // Méthode pour retourner au menu depuis Winner ou GamePlay
     public void GoToHome()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Home");

@@ -56,7 +56,7 @@ public class WorldGenerator : MonoBehaviour
         if (smallEnvParent) DestroyImmediate(smallEnvParent.gameObject);
         if (upEnvParent) DestroyImmediate(upEnvParent.gameObject);
         if(winParent) DestroyImmediate(winParent.gameObject);
-       
+
     } 
 
     void PlaceObjects(GameObject[] prefabs, int count, string parentName, float heightOffset, float minX, float maxX,
@@ -83,4 +83,4 @@ public class WorldGenerator : MonoBehaviour
         }
         Debug.Log($"{parentName}: {count} objets générés");
     }
-} 
+}

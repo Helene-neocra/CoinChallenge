@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(rayStart, Vector3.down, out hit, 20f))
         {
             // Vérifier si c'est bien un objet au sol
-            if (hit.collider.gameObject.name.Contains("Ground") || 
+            if (hit.collider.gameObject.name.Contains("Ground") ||
                 hit.collider.gameObject.name.Contains("Floor"))
             {
                 // Place le joueur sur la surface du sol détectée avec un offset adapté au nouveau système
