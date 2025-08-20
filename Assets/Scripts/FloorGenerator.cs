@@ -5,14 +5,13 @@ public class FloorGenerator : MonoBehaviour
     public event System.Action<float, float, float, float> OnFloorGenerated;
     public GameObject[] floorPrefabs;
     public int worldSize = 2;
-    private float spacing = 4f;
+    private float _spacing = 4f;
 
     void Start()
     {
         GameObject prefab = floorPrefabs[Random.Range(0, floorPrefabs.Length)];
-        spacing = prefab.GetComponentInChildren<RefPointFloor>().getDistance() * 2;
+        _spacing = prefab.GetComponentInChildren<RefPointFloor>().getDistance() * 2;
         GenerateFloor();
-
     }
 
     void GenerateFloor()
@@ -21,18 +20,16 @@ public class FloorGenerator : MonoBehaviour
         {
             for (int z = 0; z < worldSize; z++)
             {
-
-                Vector3 position = new Vector3(x * spacing, 0, z * spacing);
-                Debug.Log(spacing);
+                Vector3 position = new Vector3(x * _spacing, 0, z * _spacing);
                 GameObject prefab = floorPrefabs[Random.Range(0, floorPrefabs.Length)];
                 Instantiate(prefab, position, Quaternion.identity);
             }
         }
 
-        var minX = -spacing / 2;
-        var minZ = -spacing / 2;
-        var maxX = worldSize * spacing - spacing / 2;
-        var maxZ = worldSize * spacing - spacing / 2;
+        var minX = -_spacing / 2;
+        var minZ = -_spacing / 2;
+        var maxX = worldSize * _spacing - _spacing / 2;
+        var maxZ = worldSize * _spacing - _spacing / 2;
         OnFloorGenerated?.Invoke(minX, minZ, maxX, maxZ);
     }
 }
