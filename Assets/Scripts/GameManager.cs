@@ -22,6 +22,12 @@ public class GameManager : MonoBehaviour
     void OnEnable() => Timer.OnTimeUp += EndGame;
     void OnDisable() => Timer.OnTimeUp -= EndGame;
 
+    // Permet aux autres scripts de déclencher le Game Over
+    public void TriggerGameOver()
+    {
+        EndGame();
+    }
+
     void EndGame()
     {
         if (gameEnded) return;
