@@ -7,7 +7,7 @@ public class Slurp : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Si le collider des pieds du joueur touche Slurp
-        if (other.name == "colliderPlayer")
+        if (other.name == "ColliderPlayer")
         {
             Debug.Log("Slurp détruit par un saut du joueur !");
             Destroy(gameObject);
