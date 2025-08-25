@@ -8,9 +8,8 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera skyCamera;
     public CinemachineVirtualCamera playerCamera;
     public float transitionDelay = 2f;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
         skyCamera.Priority = 20;
         playerCamera.Priority = 10;
@@ -24,9 +23,4 @@ public class CameraController : MonoBehaviour
         playerCamera.Priority = 20;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

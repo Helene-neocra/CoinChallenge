@@ -3,6 +3,7 @@ using UnityEngine;
 public class FloorGenerator : MonoBehaviour
 {
     public event System.Action<float, float, float, float> OnFloorGenerated;
+    public event System.Action<Vector3> OnPlatformGenerated; // Nouvel événement pour la position de la plateforme
     public GameObject[] floorPrefabs;
     public GameObject platformPrefab; // Prefab spécifique pour la plateforme, assignable depuis Unity
     public int worldSize = 2;
@@ -52,5 +53,8 @@ public class FloorGenerator : MonoBehaviour
         Vector3 platformPosition = new Vector3(centerX, 0, maxZ + _spacing);
 
         Instantiate(platformPrefab, platformPosition, Quaternion.identity);
+        
+        // Notifier que la plateforme a été générée avec sa position
+        OnPlatformGenerated?.Invoke(platformPosition);
     }
 }

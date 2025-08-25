@@ -16,10 +16,18 @@ public class PlayerController : MonoBehaviour
     private bool isJumpMiddle = false;
     private bool isFalling = false;
     private Animator animator;
+    private FloorGenerator floorGenerator; // Référence au FloorGenerator
 
     void Awake()
     {
         controls = new PlayerMove();
+        
+        // Trouver le FloorGenerator dans la scène
+        floorGenerator = FindObjectOfType<FloorGenerator>();
+        if (floorGenerator != null)
+        {
+            floorGenerator.OnPlatformGenerated += PositionPlayerOnPlatform;
+        }
     }
 
     void OnEnable()
@@ -59,12 +67,21 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         
-        // Place le joueur sur la surface du sol au démarrage
-        PositionPlayerOnGround();
+        // Ne plus appeler PositionPlayerOnGround() car on attend la plateforme
     }
     
+    void PositionPlayerOnPlatform(Vector3 platformPosition)
+    {
+        // Positionner le joueur au centre de la plateforme avec un offset en Y
+        Vector3 playerPosition = new Vector3(platformPosition.x, platformPosition.y + 1f, platformPosition.z);
+        transform.position = playerPosition;
+        
+        Debug.Log($"Player positioned on platform at: {playerPosition}");
+    }
+
     void PositionPlayerOnGround()
     {
+        // Cette méthode n'est plus utilisée mais gardée au cas où
         // Position par défaut plus sûre au centre du monde
         Vector3 defaultPosition = new Vector3(30f, 2f, 30f); // Centre du monde 30x30
         
@@ -185,5 +202,14 @@ public class PlayerController : MonoBehaviour
         }
         
         Debug.Log("Player movement stopped - Game Over");
+    }
+
+    void OnDestroy()
+    {
+        // Se désabonner de l'événement pour éviter les erreurs
+        if (floorGenerator != null)
+        {
+            floorGenerator.OnPlatformGenerated -= PositionPlayerOnPlatform;
+        }
     }
 }
