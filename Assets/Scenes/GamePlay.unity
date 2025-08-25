@@ -273,6 +273,7 @@ MonoBehaviour:
   floorPrefabs:
   - {fileID: 8783942742790337804, guid: 6ff40d6ed0c774580a800d65d7229b20, type: 3}
   - {fileID: 2567249757650446784, guid: 4bb804980e9ce4acfa688c02b53781f2, type: 3}
+  platformPrefab: {fileID: 2567249757650446784, guid: 445e4cdc973fa43e39a04868fb687e02, type: 3}
   worldSize: 4
 --- !u!4 &279090514
 Transform:
