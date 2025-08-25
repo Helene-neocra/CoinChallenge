@@ -2,7 +2,7 @@ using UnityEngine;
 
 using UnityEngine;
 
-public class Slurp : MonoBehaviour
+public class Slurp : EnnemiComportement
 {
     private void OnTriggerEnter(Collider other)
     {
@@ -10,23 +10,15 @@ public class Slurp : MonoBehaviour
         if (other.name == "ColliderPlayer")
         {
             Debug.Log("Slurp détruit par un saut du joueur !");
+            gameObject.SetActive(false);
             Destroy(gameObject);
             return; // Important : évite le Game Over
         }
 
-        // Si le joueur (corps principal) touche Slurp
-        if (other.GetComponent<PlayerController>() != null)
+        else
         {
-            var gm = FindObjectOfType<GameManager>();
-            if (gm != null)
-            {
-                Debug.Log("Slurp: collision avec le joueur, déclenche Game Over");
-                gm.TriggerGameOver();
-            }
-            else
-            {
-                Debug.LogWarning("Slurp: GameManager introuvable dans la scène");
-            }
+            KillPlayer(other);
         }
     }
+    
 }

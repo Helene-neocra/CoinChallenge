@@ -6,11 +6,11 @@ public class EnnemiGenerator : MonoBehaviour
     public GameObject slurpPrefab;
     public GameObject turtlePrefab;
 
-    [Header("Point de spawn")]
-    public Transform spawnPoint;  // Si vide → utilisera la position de ce GameObject
     public Transform targetPoint;  
     
-    public float offsetX = 2f; // Décalage entre Slurp et Turtle
+    [Header("Vitesses")]
+    public float slurpSpeed = 2.8f;
+    public float turtleSpeed = 1.5f;
 
     void Start()
     {
@@ -19,39 +19,25 @@ public class EnnemiGenerator : MonoBehaviour
 
     public void SpawnEnnemis()
     {
-        if (slurpPrefab == null || turtlePrefab == null)
+        Vector3 slurpPos = new Vector3(15f, 0f, 15f);
+        Vector3 turtlePos = new Vector3(20f, 0f, 15f);
+
+        // Instancie Slurp
+        var slurp = Instantiate(slurpPrefab, slurpPos, Quaternion.identity);
+        var slurpNavMesh = slurp.GetComponent<AgentNavMesh>();
+        if (slurpNavMesh != null)
         {
-            Debug.LogError("⚠️ Assigne Slurp et Turtle dans l’inspector !");
-            return;
+            slurpNavMesh.target = targetPoint;
+            slurpNavMesh.agent.speed = slurpSpeed;
         }
 
-        // Point de base pour le spawn
-        Vector3 basePos = spawnPoint ? spawnPoint.position : transform.position;
-
-        // Instancie Slurp à la position de base
-        var slurp = Instantiate(slurpPrefab, basePos, Quaternion.identity);
-        // Assigne la cible à Slurp
-        if (targetPoint != null)
+        // Instancie Turtle
+        var turtle = Instantiate(turtlePrefab, turtlePos, Quaternion.identity);
+        var turtleNavMesh = turtle.GetComponent<AgentNavMesh>();
+        if (turtleNavMesh != null)
         {
-            var slurpNavMesh = slurp.GetComponent<AgentNavMesh>();
-            if (slurpNavMesh != null)
-            {
-                slurpNavMesh.target = targetPoint;
-            }
+            turtleNavMesh.target = targetPoint;
+            turtleNavMesh.agent.speed = turtleSpeed;
         }
-
-        // Instancie Turtle à côté (en X)
-        var turtle = Instantiate(turtlePrefab, basePos, Quaternion.identity);
-        if (targetPoint != null)
-        {
-            var turtleNavMesh = turtle.GetComponent<AgentNavMesh>();
-            if (turtleNavMesh != null)
-            {
-                Vector3 turtlePos = basePos + new Vector3(offsetX, 0, 0);
-                turtleNavMesh.target = targetPoint;
-            }
-        }
-        
-        
     }
 }

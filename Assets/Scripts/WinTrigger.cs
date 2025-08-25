@@ -22,7 +22,7 @@ public class WinTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ GameSceneManager introuvable ! Impossible de charger la scène Winner.");
+            Debug.LogError("GameSceneManager introuvable ! Impossible de charger la scène Winner.");
         }
     }
 }

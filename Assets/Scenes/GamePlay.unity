@@ -432,6 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375403770}
+  - component: {fileID: 375403772}
   - component: {fileID: 375403769}
   m_Layer: 0
   m_Name: EnnemisGenerator
@@ -454,9 +455,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slurpPrefab: {fileID: 1882507459920986037, guid: de914d595b06e496d9ed385c1a1b608b, type: 3}
   turtlePrefab: {fileID: 3795634352426605587, guid: fa4dc33343b2545c5b10d1f9a316e264, type: 3}
-  spawnPoint: {fileID: 2144693356}
   targetPoint: {fileID: 2144693356}
-  offsetX: 2
+  slurpSpeed: 2.8
+  turtleSpeed: 1.5
 --- !u!4 &375403770
 Transform:
   m_ObjectHideFlags: 0
@@ -472,6 +473,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &375403772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375403768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbacb2a76b4b14990a2e2d4288ffafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &435245320
 GameObject:
   m_ObjectHideFlags: 0
