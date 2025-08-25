@@ -28,7 +28,7 @@ public class FloorGenerator : MonoBehaviour
             {
                 Vector3 position = new Vector3(x * _spacing, 0, z * _spacing);
                 GameObject prefab = floorPrefabs[Random.Range(0, floorPrefabs.Length)];
-                Instantiate(prefab, position, Quaternion.identity);
+                GameObject floorInstance = Instantiate(prefab, position, Quaternion.identity);
             }
         }
 

@@ -10,7 +10,8 @@ public class Timer : MonoBehaviour
     public TMP_Text timerText; // Référence au texte UI
     
     private float currentTime;
-    private bool isGameRunning = true;
+    private bool isGameRunning = false; // Changé à false pour ne pas démarrer automatiquement
+    private bool hasStarted = false; // Nouveau flag pour éviter les démarrages multiples
     
     public delegate void TimeUpDelegate();
     public static event TimeUpDelegate OnTimeUp;
@@ -20,6 +21,29 @@ public class Timer : MonoBehaviour
     {
         currentTime = gameTime;
         UpdateTimerDisplay();
+        
+        // S'abonner à l'événement du FloorGenerator pour démarrer le timer
+        FloorGenerator floorGen = FindObjectOfType<FloorGenerator>();
+        if (floorGen != null)
+        {
+            floorGen.OnFloorGenerated += OnFloorReady;
+        }
+    }
+    
+    void OnFloorReady(float minX, float minZ, float maxX, float maxZ)
+    {
+        // Le floor est prêt, on peut maintenant détecter quand le joueur y entre
+        // Cette méthode sera appelée quand le floor est généré
+    }
+    
+    public void StartTimer()
+    {
+        if (!hasStarted)
+        {
+            isGameRunning = true;
+            hasStarted = true;
+            Debug.Log("Timer démarré !");
+        }
     }
 
     // Update is called once per frame

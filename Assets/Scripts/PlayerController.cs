@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isFalling = false;
     private Animator animator;
     private FloorGenerator floorGenerator; // Référence au FloorGenerator
+    private static bool timerStarted = false; // Pour éviter les démarrages multiples
 
     void Awake()
     {
@@ -121,6 +122,18 @@ public class PlayerController : MonoBehaviour
     {
         // Détection de la marche via l'input
         bool isWalking = moveInput.sqrMagnitude > 0.01f && isGrounded;
+
+        // Démarrer le timer dès que le joueur commence à bouger
+        if (!timerStarted && moveInput.sqrMagnitude > 0.01f)
+        {
+            timerStarted = true;
+            Timer timer = FindObjectOfType<Timer>();
+            if (timer != null)
+            {
+                timer.StartTimer();
+                Debug.Log("Premier mouvement détecté - Timer démarré !");
+            }
+        }
 
         // Gestion des états de saut
         isJumping = !isGrounded && rb.velocity.y > 0.1f;
