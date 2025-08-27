@@ -98,11 +98,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Premier mouvement détecté - Timer démarré !");
             }
         }
-
-        if (!isGrounded)
-        {
-            Debug.Log("Velocity : " + rb.velocity.y);
-        }
+        
         
         // Gestion des états de saut
         isJumping = !isGrounded && rb.velocity.y > 0.1f;
