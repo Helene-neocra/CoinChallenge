@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6778281511013123585}
-  - component: {fileID: 695606604651986259}
   - component: {fileID: 12586003945210777}
   - component: {fileID: 9088349116236199179}
   - component: {fileID: 3620281854923522424}
   - component: {fileID: 657407097697435516}
+  - component: {fileID: -2655235987088181498}
   m_Layer: 0
   m_Name: slurp
   m_TagString: Untagged
@@ -39,27 +39,6 @@ Transform:
   - {fileID: 839500254610876075}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &695606604651986259
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882507459920986037}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 6520c6d7889f4c72b416f07f34edd515, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9bbcf96c9a254c5ba654027c656d7b39, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!136 &12586003945210777
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -131,6 +110,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbacb2a76b4b14990a2e2d4288ffafa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &-2655235987088181498
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882507459920986037}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 3a16534b4b074acc99be2eec5ca12eeb, type: 3}
+  m_Controller: {fileID: 9100000, guid: 889c8a72025924038a1c1aeb74936389, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2937557926791594020
 GameObject:
   m_ObjectHideFlags: 0

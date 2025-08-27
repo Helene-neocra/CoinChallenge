@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private bool isFalling = false;
     private Animator animator;
     private FloorGenerator floorGenerator; // Référence au FloorGenerator
+    public float groundedCast = 0.1f; // Distance du raycast pour détecter le sol
     private static bool timerStarted = false; // Pour éviter les démarrages multiples
 
     void Awake()
@@ -68,7 +70,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         
-        // Ne plus appeler PositionPlayerOnGround() car on attend la plateforme
     }
     
     void PositionPlayerOnPlatform(Vector3 platformPosition)
@@ -78,43 +79,6 @@ public class PlayerController : MonoBehaviour
         transform.position = playerPosition;
         
         Debug.Log($"Player positioned on platform at: {playerPosition}");
-    }
-
-    void PositionPlayerOnGround()
-    {
-        // Cette méthode n'est plus utilisée mais gardée au cas où
-        // Position par défaut plus sûre au centre du monde
-        Vector3 defaultPosition = new Vector3(30f, 2f, 30f); // Centre du monde 30x30
-        
-        // Raycast depuis au-dessus pour trouver la surface du sol
-        Vector3 rayStart = defaultPosition + Vector3.up * 10f;
-        RaycastHit hit;
-        
-        // Raycast pour détecter tous les colliders
-        if (Physics.Raycast(rayStart, Vector3.down, out hit, 20f))
-        {
-            // Vérifier si c'est bien un objet au sol
-            if (hit.collider.gameObject.name.Contains("Ground") ||
-                hit.collider.gameObject.name.Contains("Floor"))
-            {
-                // Place le joueur sur la surface du sol détectée avec un offset adapté au nouveau système
-                Vector3 newPos = hit.point + Vector3.up * 0.0f; // Pas d'offset, directement sur le NavMesh
-                transform.position = newPos;
-                Debug.Log($"Player positioned on ground surface at: {newPos}");
-            }
-            else
-            {
-                // Position par défaut
-                transform.position = defaultPosition;
-                Debug.Log("Player positioned at default location");
-            }
-        }
-        else
-        {
-            // Position de secours
-            transform.position = defaultPosition;
-            Debug.Log("Could not find ground surface, using default position");
-        }
     }
 
     // Update is called once per frame
@@ -135,6 +99,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (!isGrounded)
+        {
+            Debug.Log("Velocity : " + rb.velocity.y);
+        }
+        
         // Gestion des états de saut
         isJumping = !isGrounded && rb.velocity.y > 0.1f;
         isJumpMiddle = !isGrounded && Mathf.Abs(rb.velocity.y) <= 0.1f;
@@ -154,6 +123,19 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isJumping", isJumping);
             animator.SetBool("isJumpMiddle", isJumpMiddle);
             animator.SetBool("isFalling", isFalling);
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.down, out var hit, groundedCast))
+        {
+            // Vérifier si c'est bien un objet au sol
+            if (hit.collider.gameObject.CompareTag("Floor"))
+            {
+                isGrounded = true;
+            }
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 
@@ -182,14 +164,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.contacts[0].normal.y > 0.5f)
-        {
-            isGrounded = true;
         }
     }
     
@@ -224,5 +198,15 @@ public class PlayerController : MonoBehaviour
         {
             floorGenerator.OnPlatformGenerated -= PositionPlayerOnPlatform;
         }
+    }
+    
+    void OnDrawGizmos()
+    {
+        // Gizmo pour visualiser le raycast de détection du sol
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * 1);
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundedCast);
     }
 }
