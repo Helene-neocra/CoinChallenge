@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private FloorGenerator floorGenerator; // Référence au FloorGenerator
     public float groundedCast = 0.1f; // Distance du raycast pour détecter le sol
-    private static bool timerStarted = false; // Pour éviter les démarrages multiples
+    private bool timerStarted = false; // Retirer static pour permettre réinitialisation
 
     void Awake()
     {

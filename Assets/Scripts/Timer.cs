@@ -21,6 +21,7 @@ public class Timer : MonoBehaviour
     {
         currentTime = gameTime;
         UpdateTimerDisplay();
+        hasStarted = false; // Réinitialiser le flag à chaque nouvelle scène
         
         // S'abonner à l'événement du FloorGenerator pour démarrer le timer
         FloorGenerator floorGen = FindObjectOfType<FloorGenerator>();
@@ -42,7 +43,6 @@ public class Timer : MonoBehaviour
         {
             isGameRunning = true;
             hasStarted = true;
-            Debug.Log("Timer démarré !");
         }
     }
 
