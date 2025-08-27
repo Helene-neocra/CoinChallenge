@@ -4,10 +4,15 @@ public class Slurp : EnnemiComportement
 {
     private Animator animator;
     private bool isDead = false;
+    private Transform player;
+    
+    [SerializeField] private float detectionRadius = 1.5f;
+    [SerializeField] private float jumpDetectionHeight = 2f;
     
     private void Start()
     {
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         
         if (animator != null)
         {
@@ -15,22 +20,32 @@ public class Slurp : EnnemiComportement
         }
     }
     
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (isDead) return; // Bloquer toute interaction si déjà mort
+        if (isDead || player == null) return;
         
-        // Si c'est le collider des pieds du joueur = destruction de Slurp
-        if (other.name == "ColliderPlayer")
+        CheckPlayerInteraction();
+    }
+    
+    private void CheckPlayerInteraction()
+    {
+        Vector3 slurpPosition = transform.position;
+        Vector3 playerPosition = player.position;
+        
+        float distanceToPlayer = Vector3.Distance(slurpPosition, playerPosition);
+        
+        // Vérifier si le joueur saute sur la tête de Slurp
+        if (playerPosition.y > slurpPosition.y + 0.5f && distanceToPlayer <= 1.5f)
         {
             Debug.Log("Slurp détruit par un saut du joueur !");
             DestroySlurp();
             return;
         }
         
-        // Si c'est le joueur principal = Game Over
-        if (other.CompareTag("Player"))
+        // Vérifier collision latérale avec le joueur (même niveau Y)
+        if (Mathf.Abs(playerPosition.y - slurpPosition.y) < 1f && distanceToPlayer <= 1.2f)
         {
-            KillPlayer(other);
+            KillPlayer(player.GetComponent<Collider>());
         }
     }
     
@@ -38,16 +53,12 @@ public class Slurp : EnnemiComportement
     {
         isDead = true;
         
-        // Désactiver immédiatement le collider pour éviter d'autres triggers
-       //GetComponent<Collider>().enabled = false;
-        
         if (animator != null)
         {
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsDying", true);
         }
         
-        // Détruire après l'animation
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 2f);
     }
 }
