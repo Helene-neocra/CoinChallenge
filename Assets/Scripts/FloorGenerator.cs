@@ -44,7 +44,6 @@ public class FloorGenerator : MonoBehaviour
         // Vérifier qu'un prefab de plateforme est assigné
         if (platformPrefab == null)
         {
-            Debug.LogWarning("Aucun prefab de plateforme assigné !");
             return;
         }
 

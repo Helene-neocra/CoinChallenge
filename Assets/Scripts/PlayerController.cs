@@ -77,8 +77,6 @@ public class PlayerController : MonoBehaviour
         // Positionner le joueur au centre de la plateforme avec un offset en Y
         Vector3 playerPosition = new Vector3(platformPosition.x, platformPosition.y + 1f, platformPosition.z);
         transform.position = playerPosition;
-        
-        Debug.Log($"Player positioned on platform at: {playerPosition}");
     }
 
     // Update is called once per frame
@@ -95,14 +93,13 @@ public class PlayerController : MonoBehaviour
             if (timer != null)
             {
                 timer.StartTimer();
-                Debug.Log("Premier mouvement détecté - Timer démarré !");
             }
         }
         
         
         // Gestion des états de saut
         isJumping = !isGrounded && rb.velocity.y > 0.1f;
-        isJumpMiddle = !isGrounded && Mathf.Abs(rb.velocity.y) <= 0.1f;
+        isJumpMiddle = !isGrounded && rb.velocity.y <= 0.1f;
         isFalling = !isGrounded && rb.velocity.y < -0.1f;
 
         // Reset explicite si le joueur est au sol et vitesse verticale très faible
@@ -155,7 +152,6 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        Debug.Log($"Jump input reçu | isGrounded = {isGrounded}");
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -183,8 +179,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isJumpMiddle", false);
             animator.SetBool("isFalling", false);
         }
-        
-        Debug.Log("Player movement stopped - Game Over");
     }
 
     void OnDestroy()
@@ -194,15 +188,5 @@ public class PlayerController : MonoBehaviour
         {
             floorGenerator.OnPlatformGenerated -= PositionPlayerOnPlatform;
         }
-    }
-    
-    void OnDrawGizmos()
-    {
-        // Gizmo pour visualiser le raycast de détection du sol
-        Gizmos.color = isGrounded ? Color.green : Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * 1);
-        
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundedCast);
     }
 }
