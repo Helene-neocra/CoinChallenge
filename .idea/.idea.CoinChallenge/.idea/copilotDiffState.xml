@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Assets/Scripts/EnnemiPatrouille.cs">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Assets/Scripts/EnnemiPatrouille.cs" />
+              <option name="updatedContent" value="using UnityEngine;&#10;using UnityEngine.AI;&#10;&#10;public class EnnemiPatrouille : MonoBehaviour&#10;{&#10;    public Vector3 centreZone;&#10;    public float rayonZone = 5f;&#10;    public float tempsAttente = 1.5f;&#10;&#10;    private NavMeshAgent agent;&#10;    private float timer = 0f;&#10;    private bool enAttente = false;&#10;&#10;    void Start()&#10;    {&#10;        agent = GetComponent&lt;NavMeshAgent&gt;();&#10;        if (agent == null) Debug.LogWarning($&quot;{name}: NavMeshAgent manquant&quot;);&#10;        ChoisirNouveauPoint();&#10;    }&#10;&#10;    void Update()&#10;    {&#10;        if (enAttente)&#10;        {&#10;            timer += Time.deltaTime;&#10;            if (timer &gt;= tempsAttente)&#10;            {&#10;                enAttente = false;&#10;                ChoisirNouveauPoint();&#10;            }&#10;        }&#10;        else if (agent != null &amp;&amp; !agent.pathPending &amp;&amp; agent.remainingDistance &lt; 0.5f)&#10;        {&#10;            enAttente = true;&#10;            timer = 0f;&#10;        }&#10;    }&#10;&#10;    void ChoisirNouveauPoint()&#10;    {&#10;        Vector2 randomCircle = Random.insideUnitCircle * rayonZone;&#10;        Vector3 destination = centreZone + new Vector3(randomCircle.x, 0, randomCircle.y);&#10;        if (agent != null)&#10;            agent.SetDestination(destination);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

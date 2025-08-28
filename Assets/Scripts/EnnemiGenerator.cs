@@ -16,39 +16,41 @@ public class EnnemiGenerator : MonoBehaviour
     public int nbSlurp = 2;
     public int nbTurtle = 2;
 
-    void Start()
+    private void Awake()
     {
-        SpawnEnnemis();
+        var floorGen = FindObjectOfType<FloorGenerator>();
+        if (floorGen != null)
+        {
+            floorGen.OnFloorGenerated += SpawnEnnemis;
+        }
     }
 
-    public void SpawnEnnemis()
+    public void SpawnEnnemis(float minX, float minZ, float maxX, float maxZ)
     {
-        // Plage de spawn temporaire (à adapter selon le floor plus tard)
-        float minX = 10f, maxX = 30f, minZ = 10f, maxZ = 30f;
+        SpawnType(slurpPrefab, nbSlurp, slurpSpeed, minX, maxX, minZ, maxZ);
+        SpawnType(turtlePrefab, nbTurtle, turtleSpeed, minX, maxX, minZ, maxZ);
+    }
 
-        // Slurp
-        for (int i = 0; i < nbSlurp; i++)
+    void SpawnType(GameObject prefab, int count, float speed, float minX, float maxX, float minZ, float maxZ)
+    {
+        for (int i = 0; i < count; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(minX, maxX), 0f, Random.Range(minZ, maxZ));
-            var slurp = Instantiate(slurpPrefab, pos, Quaternion.identity);
-            var slurpNavMesh = slurp.GetComponent<AgentNavMesh>();
-            if (slurpNavMesh != null)
+            float x = Random.Range(minX, maxX);
+            float z = Random.Range(minZ, maxZ);
+            Vector3 rayStart = new Vector3(x, 50f, z);
+            if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 100f))
             {
-                slurpNavMesh.target = targetPoint;
-                slurpNavMesh.agent.speed = slurpSpeed;
-            }
-        }
-
-        // Turtle
-        for (int i = 0; i < nbTurtle; i++)
-        {
-            Vector3 pos = new Vector3(Random.Range(minX, maxX), 0f, Random.Range(minZ, maxZ));
-            var turtle = Instantiate(turtlePrefab, pos, Quaternion.identity);
-            var turtleNavMesh = turtle.GetComponent<AgentNavMesh>();
-            if (turtleNavMesh != null)
-            {
-                turtleNavMesh.target = targetPoint;
-                turtleNavMesh.agent.speed = turtleSpeed;
+                Vector3 spawnPos = hit.point;
+                var ennemi = Instantiate(prefab, spawnPos, Quaternion.identity);
+                var nav = ennemi.GetComponent<AgentNavMesh>();
+                if (nav != null)
+                {
+                    nav.target = targetPoint;
+                    nav.agent.speed = speed;
+                    nav.enPatrouille = true;
+                    nav.centreZoneAttente = spawnPos;
+                    nav.rayonZoneAttente = 5f;
+                }
             }
         }
     }

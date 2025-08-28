@@ -72,7 +72,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 2.8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -98,6 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 9088349116236199179}
   target: {fileID: 5782835143952645813, guid: 0b7fdcac35cd64cdc8c0632b248ff7db, type: 3}
+  enPatrouille: 1
+  centreZoneAttente: {x: 0, y: 0, z: 0}
+  rayonZoneAttente: 5
+  tempsAttente: 1.5
 --- !u!114 &657407097697435516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbacb2a76b4b14990a2e2d4288ffafa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRadius: 1.5
+  jumpDetectionHeight: 2
 --- !u!95 &-2655235987088181498
 Animator:
   serializedVersion: 5
