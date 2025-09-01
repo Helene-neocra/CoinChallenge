@@ -173,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTime: 60
   timerText: {fileID: 349119874}
+  directionalLight: {fileID: 705507994}
 --- !u!1 &117616935
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,8 +803,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.97916865, g: 0.990566, b: 0.85506403, a: 1}
+  m_Intensity: 0.1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
@@ -842,7 +843,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
