@@ -34,12 +34,10 @@ public class CoinController : MonoBehaviour
                 GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
                 
                 // Ajouter le script de collision directement sur chaque coin
-                // coin.AddComponent<CoinTrigger>();
+                
             }
         }
-       
         
-        Debug.Log($"{coinCount} coins générés");
     }
     
     void ClearCoins()
@@ -50,9 +48,5 @@ public class CoinController : MonoBehaviour
         }
     }
     
-  
-    
     
 }  
-
-// Classe interne pour gérer les collisions
