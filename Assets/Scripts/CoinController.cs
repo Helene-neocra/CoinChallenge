@@ -33,8 +33,6 @@ public class CoinController : MonoBehaviour
                 Vector3 coinPosition = hit.point + Vector3.up * coinHeight;
                 GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
                 
-                // Ajouter le script de collision directement sur chaque coin
-                
             }
         }
         

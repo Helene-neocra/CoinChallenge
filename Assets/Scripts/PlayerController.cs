@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private FloorGenerator floorGenerator; // Référence au FloorGenerator
     public float groundedCast = 0.1f; // Distance du raycast pour détecter le sol
     private bool timerStarted = false; // Retirer static pour permettre réinitialisation
-
+    SimpleAudioManager audioManager;
     void Awake()
     {
         controls = new PlayerMove();
@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        audioManager = FindObjectOfType<SimpleAudioManager>();
         
     }
     
@@ -156,6 +157,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isGrounded = false;
+            audioManager.PlayJumpSound();
         }
     }
     
