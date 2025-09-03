@@ -116,7 +116,7 @@ public class Timer : MonoBehaviour
             Debug.Log($"[Timer] Light assigné dans l'inspecteur : {lightToUse.name}, type={lightToUse.type}");
         }
         lightToUse.intensity = intensity;
-        Debug.Log($"[Timer] Intensité du Directional Light réglée à {intensity}");
+       
     }
     
     private void StartLightTransition(float targetIntensity, float duration)

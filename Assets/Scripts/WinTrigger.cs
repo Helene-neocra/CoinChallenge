@@ -7,7 +7,6 @@ public class WinTrigger : MonoBehaviour
         // Vérifie si c'est bien le Player qui entre
         if (other.CompareTag("Player"))
         {
-            Debug.Log("🎉 Partie gagnée ! Redirection vers la scène Winner...");
             WinGame();
         }
     }

@@ -23,6 +23,19 @@ public class GameManager : MonoBehaviour
         timer = FindObjectOfType<Timer>();
         originalTimeScale = Time.timeScale; // Sauvegarder la timeScale au démarrage
     }
+    
+    private void Start()
+    {
+        var player = FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            var health = player.GetComponent<Health>();
+            if (health != null)
+            {
+                health.OnDied += TriggerGameOver;
+            }
+        }
+    }
 
     void OnEnable() => Timer.OnTimeUp += EndGame;
     void OnDisable() => Timer.OnTimeUp -= EndGame;
@@ -38,13 +51,10 @@ public class GameManager : MonoBehaviour
         if (gameEnded) return;
         gameEnded = true;
 
-        Debug.Log($"Temps écoulé ! Score final : {ScoreUI.score}");
-
         // Mettre en pause le jeu si l'option est activée
         if (pauseOnGameOver)
         {
             Time.timeScale = 0f;
-            Debug.Log("Jeu mis en pause (Time.timeScale = 0)");
         }
 
         player?.ForceStop();

@@ -81,6 +81,5 @@ public class WorldGenerator : MonoBehaviour
                 Instantiate(prefab, spawnPos, rot, parent.transform);
             }
         }
-        Debug.Log($"{parentName}: {count} objets générés");
     }
 }

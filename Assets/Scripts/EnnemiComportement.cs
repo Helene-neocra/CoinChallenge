@@ -6,19 +6,20 @@ public class EnnemiComportement : MonoBehaviour
 {
     protected void KillPlayer(Collider other)
     {
-        // Si le joueur (corps principal) touche Slurp
-        if (other.GetComponent<PlayerController>() != null)
+        var player = other.GetComponent<PlayerController>();
+        if (player != null)
         {
-            var gm = FindObjectOfType<GameManager>();
-            if (gm != null)
+            // Récupère le composant Health du joueur
+            var health = player.GetComponent<Health>();
+            if (health != null)
             {
-                Debug.Log("Slurp: collision avec le joueur, déclenche Game Over");
-                gm.TriggerGameOver();
+                health.TakeDamage(20); // exemple : 20 de dégâts
             }
             else
             {
-                Debug.LogWarning("Slurp: GameManager introuvable dans la scène");
+                Debug.LogWarning("Pas de script Health trouvé sur le joueur !");
             }
         }
     }
+
 }
