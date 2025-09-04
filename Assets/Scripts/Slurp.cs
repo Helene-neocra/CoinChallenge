@@ -37,7 +37,6 @@ public class Slurp : EnnemiComportement
         // Vérifier si le joueur saute sur la tête de Slurp
         if (playerPosition.y > slurpPosition.y + 0.5f && distanceToPlayer <= 1.5f)
         {
-            Debug.Log("Slurp détruit par un saut du joueur !");
             DestroySlurp();
             return;
         }
@@ -46,6 +45,7 @@ public class Slurp : EnnemiComportement
         if (Mathf.Abs(playerPosition.y - slurpPosition.y) < 1f && distanceToPlayer <= 1.2f)
         {
             KillPlayer(player.GetComponent<Collider>());
+            Destroy(gameObject);
         }
     }
     

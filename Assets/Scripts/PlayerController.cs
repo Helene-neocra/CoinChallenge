@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         audioManager = FindObjectOfType<SimpleAudioManager>();
-        
+
     }
     
     void PositionPlayerOnPlatform(Vector3 platformPosition)
@@ -192,3 +192,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+

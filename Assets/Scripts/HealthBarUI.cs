@@ -11,28 +11,19 @@ public class HealthBarUI : MonoBehaviour
     {
         if (slider == null)
             slider = GetComponent<Slider>();
-    }
-
-    private void OnEnable()
-    {
         if (targetHealth != null)
         {
-            targetHealth.OnHealthChanged += UpdateHealthBar;
-            // Init au démarrage
-            UpdateHealthBar(targetHealth.CurrentHealth, targetHealth.MaxHealth);
+            slider.maxValue = targetHealth.CurrentHealth;
+            slider.value = targetHealth.CurrentHealth;
         }
     }
 
-    private void OnDisable()
+    private void Update()
     {
         if (targetHealth != null)
-            targetHealth.OnHealthChanged -= UpdateHealthBar;
-    }
-
-    private void UpdateHealthBar(int current, int max)
-    {
-        slider.maxValue = max;
-        slider.value = current;
+        {
+            slider.maxValue = 100; // ou targetHealth.maxHealth si exposé
+            slider.value = targetHealth.CurrentHealth;
+        }
     }
 }
-
