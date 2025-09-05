@@ -46,6 +46,7 @@ public class Slurp : EnnemiComportement
         {
             KillPlayer(player.GetComponent<Collider>());
             Destroy(gameObject);
+            //DestroySlurp();
         }
     }
     

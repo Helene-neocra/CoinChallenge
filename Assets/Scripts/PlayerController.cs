@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    public float deathYThreshold = -5f; // Seuil Y en dessous duquel le joueur meurt
 
     private Vector2 moveInput;
     private Rigidbody rb;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private FloorGenerator floorGenerator; // Référence au FloorGenerator
     public float groundedCast = 0.1f; // Distance du raycast pour détecter le sol
     private bool timerStarted = false; // Retirer static pour permettre réinitialisation
+    private bool isDead = false; // Empêcher multiple déclenchements de mort
     SimpleAudioManager audioManager;
     void Awake()
     {
@@ -83,6 +85,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Vérification de chute mortelle
+        if (!isDead && transform.position.y < deathYThreshold)
+        {
+            isDead = true;
+            TriggerDeath();
+            return; // Sortir de Update pour éviter autres traitements
+        }
+
         // Détection de la marche via l'input
         bool isWalking = moveInput.sqrMagnitude > 0.01f && isGrounded;
 
@@ -96,7 +106,6 @@ public class PlayerController : MonoBehaviour
                 timer.StartTimer();
             }
         }
-        
         
         // Gestion des états de saut
         isJumping = !isGrounded && rb.velocity.y > 0.1f;
@@ -119,7 +128,8 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isFalling", isFalling);
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out var hit, groundedCast))
+        bool hasHit = Physics.Raycast(transform.position, Vector3.down, out var hit, groundedCast);
+        if (hasHit)
         {
             // Vérifier si c'est bien un objet au sol
             if (hit.collider.gameObject.CompareTag("Floor"))
@@ -131,6 +141,8 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+        Debug.DrawRay(transform.position, Vector3.down * groundedCast, hasHit ? Color.green : Color.red, 15f);
+        
     }
 
     void FixedUpdate()
@@ -191,5 +203,20 @@ public class PlayerController : MonoBehaviour
             floorGenerator.OnPlatformGenerated -= PositionPlayerOnPlatform;
         }
     }
-}
 
+    void TriggerDeath()
+    {
+        Debug.Log("Le joueur est mort par chute !");
+        
+        // Déclencher le game over via le GameManager
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.TriggerGameOver();
+        }
+        else
+        {
+            Debug.LogError("GameManager not found!");
+        }
+    }
+}

@@ -607,11 +607,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slurpPrefab: {fileID: 1882507459920986037, guid: de914d595b06e496d9ed385c1a1b608b, type: 3}
   turtlePrefab: {fileID: 3795634352426605587, guid: fa4dc33343b2545c5b10d1f9a316e264, type: 3}
+  emissionPrefab: {fileID: 3795634352426605587, guid: 579a6b5c63820447f8dbc76c6c46359b, type: 3}
   targetPoint: {fileID: 2144693356}
   slurpSpeed: 2.8
   turtleSpeed: 1.5
+  emissionSpeed: 1.5
   nbSlurp: 10
   nbTurtle: 10
+  nbEmission: 10
 --- !u!4 &375403770
 Transform:
   m_ObjectHideFlags: 0

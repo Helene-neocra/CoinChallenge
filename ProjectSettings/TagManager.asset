@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ref
   - Floor
+  - Ennemi
   layers:
   - Default
   - TransparentFX

@@ -7,14 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PBRDefault
+  m_Name: emission
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 2100000, guid: d819ba33ffa08489bb30dfb172e95dd1, type: 2}
+  m_Parent: {fileID: 2100000, guid: e8e1d0d5db2624f66897572ed9129d88, type: 2}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords:
+  - _EMISSION
   - _METALLICGLOSSMAP
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1

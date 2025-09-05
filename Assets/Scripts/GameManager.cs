@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Pause Settings")]
     public bool pauseOnGameOver = true; // Option pour activer/désactiver la pause
-    
+
     private bool gameEnded = false;
     private PlayerController player;
     private Timer timer;
@@ -62,12 +62,12 @@ public class GameManager : MonoBehaviour
             player.enabled = false;
 
         timer?.StopTimer();
+        
         ShowGameOverUI();
     }
 
     void ShowGameOverUI()
     {
-        Debug.Log("ShowGameOverUI called!");
         
         if (restartButton != null)
         {
@@ -81,15 +81,12 @@ public class GameManager : MonoBehaviour
         
         if (gameOverPanel != null)
         {
-            Debug.Log("Activating game over panel");
             gameOverPanel.SetActive(true);
         }
         else
         {
             Debug.Log("No game over panel assigned - using button only");
         }
-        
-        Debug.Log($"Game Over! Score final : {ScoreUI.score}");
     }
     
     public void RestartGame()
@@ -112,7 +109,6 @@ public class GameManager : MonoBehaviour
     {
         if (gameEnded) return; // Ne pas reprendre si le jeu est terminé
         Time.timeScale = originalTimeScale;
-        Debug.Log("Jeu repris");
     }
     
     // Propriété pour vérifier si le jeu est en pause

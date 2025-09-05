@@ -5,16 +5,19 @@ public class EnnemiGenerator : MonoBehaviour
     [Header("Prefabs des ennemis")]
     public GameObject slurpPrefab;
     public GameObject turtlePrefab;
+    public GameObject emissionPrefab;
 
     public Transform targetPoint;
 
     [Header("Vitesses")]
     public float slurpSpeed = 2.8f;
     public float turtleSpeed = 1.5f;
+    public float emissionSpeed = 1.5f;
 
     [Header("Quantité d'ennemis")]
     public int nbSlurp = 2;
     public int nbTurtle = 2;
+    public int nbEmission = 2;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class EnnemiGenerator : MonoBehaviour
     {
         SpawnType(slurpPrefab, nbSlurp, slurpSpeed, minX, maxX, minZ, maxZ);
         SpawnType(turtlePrefab, nbTurtle, turtleSpeed, minX, maxX, minZ, maxZ);
+        SpawnType(emissionPrefab, nbEmission, emissionSpeed, minX, maxX, minZ, maxZ);
     }
 
     void SpawnType(GameObject prefab, int count, float speed, float minX, float maxX, float minZ, float maxZ)
