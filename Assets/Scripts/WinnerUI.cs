@@ -111,7 +111,7 @@ public class WinnerUI : MonoBehaviour
     
     IEnumerator ScaleInAnimation(Transform target, float duration)
     {
-        Vector3 targetScale = Vector3.one;
+        Vector3 targetScale = new Vector3(0.5f, 0.5f, 0.5f);
         float elapsedTime = 0f;
         
         while (elapsedTime < duration)
